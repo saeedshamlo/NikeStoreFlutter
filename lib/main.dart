@@ -1,4 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:nike_store/data/product.dart';
+import 'package:nike_store/data/repo/banner_repository.dart';
+import 'package:nike_store/data/repo/product_repository.dart';
+import 'package:nike_store/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,17 +16,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    productRepository.getAllProduct(ProductSort.latest).then((value) {
+      debugPrint(value.toString());
+    }).catchError((e) {
+      debugPrint(e.toString());
+    });
+
+    bannerRepository.getBanners().then((value) {
+      debugPrint(value.toString());
+    }).catchError((e) {
+      debugPrint(e.toString());
+    });
+
+    const defultTextStyle = TextStyle(
+        fontFamily: 'YekanBakh', color: LightThemeColors.primatyTextColor);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        textTheme: TextTheme(
-          bodyText2: TextStyle(
-            fontFamily: 'YekanBakh'
-          )
-        ),
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+          textTheme: TextTheme(
+              bodyText2: defultTextStyle,
+              caption: defultTextStyle.apply(
+                  color: LightThemeColors.seccondryTextColor),
+              headline6: defultTextStyle.copyWith(fontWeight: FontWeight.bold)),
+          colorScheme: const ColorScheme.light(
+              primary: LightThemeColors.primatyColor,
+              secondary: LightThemeColors.seccondryColor,
+              onSecondary: Colors.white)),
+      home: const Directionality(
+          textDirection: TextDirection.rtl,
+          child: MyHomePage(title: 'فروشگاه نایک')),
     );
   }
 }
