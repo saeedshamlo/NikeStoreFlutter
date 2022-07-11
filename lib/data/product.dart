@@ -6,15 +6,15 @@ class ProductSort {
 }
 
 class ProductEntity {
-  final int? id;
-  final String? title;
-  final int? price;
-  final int? discount;
-  final String? image;
-  final int? status;
+  final int id;
+  final String title;
+  final int price;
+  final int discount;
+  final String image;
+  final int status;
   final int? previousPrice;
 
-  ProductEntity({
+  ProductEntity(
     this.id,
     this.title,
     this.price,
@@ -22,7 +22,7 @@ class ProductEntity {
     this.image,
     this.status,
     this.previousPrice,
-  });
+  );
 
   ProductEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
