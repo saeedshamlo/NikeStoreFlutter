@@ -12,12 +12,19 @@ class ImageLoadingService extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: radius,
-      child: CachedNetworkImage(
+    if (radius == null) {
+      return CachedNetworkImage(
         imageUrl: imageUrl,
         fit: BoxFit.cover,
-      ),
-    );
+      );
+    } else {
+      return ClipRRect(
+        borderRadius: radius,
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
   }
 }

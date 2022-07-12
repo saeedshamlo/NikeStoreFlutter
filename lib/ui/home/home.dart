@@ -10,6 +10,7 @@ import 'package:nike_store/data/repo/banner_repository.dart';
 import 'package:nike_store/data/repo/product_repository.dart';
 import 'package:nike_store/main.dart';
 import 'package:nike_store/ui/home/bloc/home_bloc.dart';
+import 'package:nike_store/ui/product/product.dart';
 import 'package:nike_store/ui/widget/image.dart';
 import 'package:nike_store/ui/widget/slider.dart';
 
@@ -83,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                             BlocProvider.of<HomeBloc>(context)
                                 .add(HomeRefresh());
                           },
-                          child: Text('تلاش دوباره'))
+                          child: const Text('تلاش دوباره'))
                     ],
                   ),
                 );
@@ -122,7 +123,7 @@ class HorizontalProductList extends StatelessWidget {
                 title,
                 style: Theme.of(context).textTheme.subtitle1,
               ),
-              TextButton(onPressed: onTap, child: Text('مشاهد همه')),
+              TextButton(onPressed: onTap, child: const Text('مشاهد همه')),
             ],
           ),
         ),
@@ -132,100 +133,17 @@ class HorizontalProductList extends StatelessWidget {
               physics: defultScrollPhysics,
               itemCount: products.length,
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.only(left: 8, right: 8),
+              padding: const EdgeInsets.only(left: 8, right: 8),
               itemBuilder: ((context, index) {
                 final product = products[index];
-                return Material(
-                  color: Colors.transparent,
-                  child: Ink(
-                    child: InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.circular(16),
-                      child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: SizedBox(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      ),
-                                  child: Stack(
-                                    children: [
-                                      SizedBox(
-                                        width: 176,
-                                        height: 189,
-                                        child: ImageLoadingService(
-                                          imageUrl: product.image,
-                                          radius: BorderRadius.circular(12),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        right: 8,
-                                        top: 8,
-                                        child: Container(
-                                          width: 32,
-                                          height: 32,
-                                          alignment: Alignment.center,
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.white),
-                                          child: Icon(
-                                            CupertinoIcons.heart,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                SizedBox(
-                                  width: 176,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 8, left: 8),
-                                    child: Text(
-                                      product.title.substring(0, 20),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      textDirection: TextDirection.rtl,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: Text(
-                                    pricalbe(product.previousPrice!),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(
-                                            decoration:
-                                                TextDecoration.lineThrough),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: Text(pricalbe(product.price),style: defultTextStyle.copyWith(fontWeight: FontWeight.bold),),
-                                ),
-                              ],
-                            ),
-                          )),
-                    ),
-                  ),
-                );
+                return ProductItem(product: product,borderRadius: BorderRadius.circular(16),);
               })),
         )
       ],
     );
   }
 }
+
 
 class Search extends StatelessWidget {
   const Search({
@@ -247,7 +165,7 @@ class Search extends StatelessWidget {
                   hintText: "جستجو",
                   hintStyle:
                       defultTextStyle.copyWith(fontWeight: FontWeight.w600),
-                  prefixIcon: Icon(CupertinoIcons.search),
+                  prefixIcon: const Icon(CupertinoIcons.search),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(24),
                       borderSide: BorderSide(

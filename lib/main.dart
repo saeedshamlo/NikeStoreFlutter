@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               button: defultTextStyle,
               caption: defultTextStyle.apply(
                   color: LightThemeColors.seccondryTextColor),
-              headline6: defultTextStyle.copyWith(fontWeight: FontWeight.bold)),
+              headline6: defultTextStyle.copyWith(fontWeight: FontWeight.bold,fontSize: 18)),
           colorScheme: const ColorScheme.light(
               primary: LightThemeColors.primatyColor,
               secondary: LightThemeColors.seccondryColor,
