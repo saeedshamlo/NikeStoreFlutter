@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nike_store/common/exception.dart';
 import 'package:nike_store/common/utils.dart';
 import 'package:nike_store/data/banner.dart';
 import 'package:nike_store/data/product.dart';
@@ -11,6 +12,7 @@ import 'package:nike_store/data/repo/product_repository.dart';
 import 'package:nike_store/main.dart';
 import 'package:nike_store/ui/home/bloc/home_bloc.dart';
 import 'package:nike_store/ui/product/product.dart';
+import 'package:nike_store/ui/widget/error.dart';
 import 'package:nike_store/ui/widget/image.dart';
 import 'package:nike_store/ui/widget/slider.dart';
 
@@ -73,20 +75,11 @@ class HomeScreen extends StatelessWidget {
               } else if (state is HomeLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is HomeError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(state.exception.message),
-                      ElevatedButton(
-                          onPressed: () {
-                            BlocProvider.of<HomeBloc>(context)
-                                .add(HomeRefresh());
-                          },
-                          child: const Text('تلاش دوباره'))
-                    ],
-                  ),
+                return AppErrorWidget(
+                  appException: state.exception,
+                  onTryAgainClick: () {
+                    BlocProvider.of<HomeBloc>(context).add(HomeRefresh());
+                  },
                 );
               } else {
                 throw Exception('state is not supported');
@@ -98,6 +91,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 class HorizontalProductList extends StatelessWidget {
   final String title;
@@ -112,7 +107,7 @@ class HorizontalProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return  Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 12, right: 12),
@@ -136,14 +131,16 @@ class HorizontalProductList extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8, right: 8),
               itemBuilder: ((context, index) {
                 final product = products[index];
-                return ProductItem(product: product,borderRadius: BorderRadius.circular(16),);
+                return ProductItem(
+                  product: product,
+                  borderRadius: BorderRadius.circular(16),
+                );
               })),
         )
       ],
     );
   }
 }
-
 
 class Search extends StatelessWidget {
   const Search({

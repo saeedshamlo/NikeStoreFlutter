@@ -31,7 +31,7 @@ class ProductItem extends StatelessWidget {
           },
           borderRadius: borderRadius,
           child: Padding(
-              padding: const EdgeInsets.all(0.0),
+              padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

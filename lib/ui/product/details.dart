@@ -4,6 +4,7 @@ import 'package:nike_store/common/utils.dart';
 import 'package:nike_store/data/product.dart';
 import 'package:nike_store/main.dart';
 import 'package:nike_store/theme.dart';
+import 'package:nike_store/ui/product/commnet/comment_list.dart';
 import 'package:nike_store/ui/widget/image.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -84,15 +85,12 @@ class ProductDetailsScreen extends StatelessWidget {
                             onPressed: () {}, child: const Text('ثبت نظر'))
                       ],
                     ),
-                    Container(
-                      color: Colors.transparent,
-                      height: 1000,
-                      width: 300,
-                    )
+                    
                   ],
                 ),
               ),
             ),
+            CommentList(productId: productEntity.id,)
           ],
         ),
       ),
