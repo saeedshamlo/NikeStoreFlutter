@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nike_store/data/product.dart';
+import 'package:nike_store/data/repo/auth_repository.dart';
 import 'package:nike_store/data/repo/banner_repository.dart';
 import 'package:nike_store/data/repo/product_repository.dart';
 import 'package:nike_store/theme.dart';
@@ -10,6 +11,8 @@ import 'package:nike_store/ui/home/home.dart';
 import 'package:nike_store/ui/root.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  authRepository.loadAuthInfo();
   runApp(const MyApp());
 }
 
@@ -38,22 +41,20 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           textTheme: TextTheme(
-              subtitle1: defultTextStyle
-                  .copyWith(
-                      fontSize: 16, color: LightThemeColors.seccondryTextColor)
-                  ,
-                
+              subtitle1: defultTextStyle.copyWith(
+                  fontSize: 16, color: LightThemeColors.seccondryTextColor),
               bodyText2: defultTextStyle,
               button: defultTextStyle,
               caption: defultTextStyle.apply(
                   color: LightThemeColors.seccondryTextColor),
-              headline6: defultTextStyle.copyWith(fontWeight: FontWeight.bold,fontSize: 18)),
+              headline6: defultTextStyle.copyWith(
+                  fontWeight: FontWeight.bold, fontSize: 18)),
           colorScheme: const ColorScheme.light(
               primary: LightThemeColors.primatyColor,
               secondary: LightThemeColors.seccondryColor,
               onSecondary: Colors.white)),
-      home:  Directionality(
-          textDirection: TextDirection.rtl, child: AuthScreen()),
+      home:
+          Directionality(textDirection: TextDirection.rtl, child: RootScreen()),
     );
   }
 }

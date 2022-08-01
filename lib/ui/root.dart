@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nike_store/ui/cart/cart.dart';
 import 'package:nike_store/ui/home/home.dart';
 
 const int homeIndex = 0;
@@ -62,7 +63,7 @@ class _RootScreenState extends State<RootScreen> {
                   Center(
                     child: Text('Search'),
                   )),
-              navigator(_cartleKey, cartIndex, Center(child: Text('Cart'))),
+              navigator(_cartleKey, cartIndex, CartScreen()),
               navigator(
                   _profileKey, profileIndex, Center(child: Text('Profile'))),
             ],
