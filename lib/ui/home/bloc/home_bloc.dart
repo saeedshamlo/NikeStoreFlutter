@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nike_store/common/exception.dart';
 import 'package:nike_store/data/banner.dart';
@@ -32,7 +33,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
 
         } catch (e) {
-          emit(HomeError(exception: e is AppException ? e : AppException()));
+          emit(HomeError(exception: e is DioError ? AppException(message: e.response?.data['message']) : AppException()));
         }
       }
     });

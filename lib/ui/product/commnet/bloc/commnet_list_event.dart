@@ -7,6 +7,7 @@ abstract class CommnetListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CommentListStarted extends CommnetListEvent{
-  
-}
+class CommentListStarted extends CommnetListEvent {}
+
+
+

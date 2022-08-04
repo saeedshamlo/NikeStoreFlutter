@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:nike_store/data/comment.dart';
 import 'package:nike_store/data/common/response_validator.dart';
+import 'package:nike_store/data/response/add_comment_response.dart';
 
 abstract class ICommentDataSource {
   Future<List<CommnetEntiry>> getAllComment({required int productId});
+
 }
 
 class CommnetDataSource
@@ -25,4 +27,6 @@ class CommnetDataSource
 
     return comments;
   }
+
+  
 }

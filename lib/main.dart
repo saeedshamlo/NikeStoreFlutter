@@ -40,6 +40,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12))),
+              minimumSize: MaterialStateProperty.all(Size.fromHeight(56)),
+              backgroundColor: MaterialStateProperty.all(LightThemeColors.primatyColor),
+              foregroundColor:
+                  MaterialStateProperty.all(Colors.white),
+            )),
+        inputDecorationTheme: InputDecorationTheme(
+                labelStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: LightThemeColors.primatyColor,
+                    ),
+                    borderRadius: BorderRadius.circular(12))),
+          snackBarTheme: SnackBarThemeData(
+            backgroundColor:LightThemeColors.primatyColor,
+              contentTextStyle: defultTextStyle.apply(
+                color: Colors.white,
+                )),
           textTheme: TextTheme(
               subtitle1: defultTextStyle.copyWith(
                   fontSize: 16, color: LightThemeColors.seccondryTextColor),

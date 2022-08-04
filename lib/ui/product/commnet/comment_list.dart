@@ -26,7 +26,7 @@ class CommentList extends StatelessWidget {
           if (state is CommnetListSuccess) {
             return SliverList(
                 delegate: SliverChildBuilderDelegate(
-              childCount: state.commnets.length,
+              childCount: 3,
               (context, index) {
                 return CommentItem(data: state.commnets[index]);
               },

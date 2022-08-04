@@ -1,11 +1,13 @@
 import 'package:nike_store/common/http_client.dart';
 import 'package:nike_store/data/comment.dart';
 import 'package:nike_store/data/dataSource/commnet_data_source.dart';
+import 'package:nike_store/data/response/add_comment_response.dart';
 
 final commnetRepository = CommnetRepository(CommnetDataSource(httpClient));
 
 abstract class ICommentRepository {
   Future<List<CommnetEntiry>> getAllComment({required int productId});
+
 }
 
 class CommnetRepository implements ICommentRepository {
@@ -15,4 +17,6 @@ class CommnetRepository implements ICommentRepository {
   @override
   Future<List<CommnetEntiry>> getAllComment({required int productId}) =>
       dataSource.getAllComment(productId: productId);
+
+ 
 }
