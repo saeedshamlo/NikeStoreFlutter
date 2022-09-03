@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nike_store/data/repo/auth_repository.dart';
 import 'package:nike_store/ui/cart/cart.dart';
 import 'package:nike_store/ui/home/home.dart';
 
@@ -53,6 +54,7 @@ class _RootScreenState extends State<RootScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
+          backgroundColor: Colors.white,
           body: IndexedStack(
             index: selectedTabIndex,
             children: [
@@ -65,7 +67,20 @@ class _RootScreenState extends State<RootScreen> {
                   )),
               navigator(_cartleKey, cartIndex, CartScreen()),
               navigator(
-                  _profileKey, profileIndex, Center(child: Text('Profile'))),
+                  _profileKey,
+                  profileIndex,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                       Text('Profile'),
+                      ElevatedButton(
+                          onPressed: () {
+                            authRepository.signOut();
+                          },
+                          child: Text('Sign Out'))
+                    ],
+                  )),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -77,7 +92,8 @@ class _RootScreenState extends State<RootScreen> {
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon/search.svg'),
                   label: 'جستجو',
-                  activeIcon: SvgPicture.asset('assets/icon/search_active.svg')),
+                  activeIcon:
+                      SvgPicture.asset('assets/icon/search_active.svg')),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon/cart.svg'),
                   label: 'سبد خرید',
@@ -85,11 +101,13 @@ class _RootScreenState extends State<RootScreen> {
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon/profile.svg'),
                   label: 'پروفایل',
-                  activeIcon: SvgPicture.asset('assets/icon/profile_active.svg'))
+                  activeIcon:
+                      SvgPicture.asset('assets/icon/profile_active.svg'))
             ],
             type: BottomNavigationBarType.fixed,
             showUnselectedLabels: false,
             showSelectedLabels: false,
+            backgroundColor: Colors.white,
             elevation: 24,
             selectedItemColor: Theme.of(context).primaryColor,
             unselectedItemColor: Colors.black.withOpacity(0.3),

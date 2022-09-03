@@ -40,15 +40,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ButtonStyle(
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12))),
-              minimumSize: MaterialStateProperty.all(Size.fromHeight(56)),
-              backgroundColor: MaterialStateProperty.all(LightThemeColors.primatyColor),
-              foregroundColor:
-                  MaterialStateProperty.all(Colors.white),
-            )),
+       appBarTheme: AppBarTheme(
+        backgroundColor: Colors.white,
+        foregroundColor: LightThemeColors.primatyTextColor,
+        elevation: 0
+       ),
         inputDecorationTheme: InputDecorationTheme(
                 labelStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
                 border: OutlineInputBorder(
