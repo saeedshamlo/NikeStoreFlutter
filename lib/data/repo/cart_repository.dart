@@ -9,7 +9,7 @@ final CartRepository cartRepository =
 
 abstract class ICartRepository {
   Future<AddToCartResponse> add(int productId);
-  Future<AddToCartResponse> changeCount(int cartItemId);
+  Future<AddToCartResponse> changeCount(int cartItemId,int count);
   Future<void> delete(int cartItemId);
   Future<int> count();
   Future<CartResponse> getAll();
@@ -24,9 +24,8 @@ class CartRepository implements ICartRepository {
   Future<AddToCartResponse> add(int productId) => dataSource.add(productId);
 
   @override
-  Future<AddToCartResponse> changeCount(int cartItemId) {
-    // TODO: implement changeCount
-    throw UnimplementedError();
+  Future<AddToCartResponse> changeCount(int cartItemId,int count) {
+    return dataSource.changeCount(cartItemId, count);
   }
 
   @override

@@ -2,9 +2,9 @@ import 'package:nike_store/data/cart_item.dart';
 
 class CartResponse {
   final List<CartItemEntity> cartItems;
-  final int payblePrice;
-  final int totalPrice;
-  final int shippingCost;
+   int payblePrice;
+   int totalPrice;
+   int shippingCost;
 
   CartResponse(
       this.cartItems, this.payblePrice, this.totalPrice, this.shippingCost);

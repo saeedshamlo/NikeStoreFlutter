@@ -86,7 +86,7 @@ class ProductItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8),
                       child: Text(
-                        pricalbe(product.previousPrice!),
+                        product.previousPrice!.withPriceLable,
                         style: Theme.of(context)
                             .textTheme
                             .caption!
@@ -96,7 +96,7 @@ class ProductItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8),
                       child: Text(
-                        pricalbe(product.price),
+                        product.price.withPriceLable,
                         style: defultTextStyle.copyWith(
                             fontWeight: FontWeight.bold),
                       ),

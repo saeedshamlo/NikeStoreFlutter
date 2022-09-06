@@ -110,7 +110,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  pricalbe(widget.productEntity.previousPrice!),
+                                  widget.productEntity.previousPrice!
+                                      .withPriceLable,
                                   style: Theme.of(context)
                                       .textTheme
                                       .caption!
@@ -119,7 +120,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               TextDecoration.lineThrough),
                                 ),
                                 Text(
-                                  pricalbe(widget.productEntity.price),
+                                  widget.productEntity.price.withPriceLable,
                                   style: defultTextStyle.copyWith(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -148,11 +149,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 child: const Text('همه'))
                           ],
                         ),
-                      
                       ],
                     ),
                   ),
-                  
                 ),
                 CommentList(
                   productId: widget.productEntity.id,

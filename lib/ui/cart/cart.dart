@@ -12,7 +12,9 @@ import 'package:nike_store/data/repo/cart_repository.dart';
 import 'package:nike_store/ui/auth/auth.dart';
 import 'package:nike_store/ui/cart/bloc/cart_bloc.dart';
 import 'package:nike_store/ui/cart/cart_items.dart';
+import 'package:nike_store/ui/cart/price_info.dart';
 import 'package:nike_store/ui/widget/empty_state.dart';
+import 'package:nike_store/ui/widget/error.dart';
 import 'package:nike_store/ui/widget/image.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -25,6 +27,7 @@ class _CartScreenState extends State<CartScreen> {
   late final CartBloc? cartBloc;
   final RefreshController refreshControler = RefreshController();
   StreamSubscription? streamSubscription;
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -41,6 +44,7 @@ class _CartScreenState extends State<CartScreen> {
         .removeListener(authChangeNotifierListener);
     cartBloc?.close();
     streamSubscription?.cancel();
+    scaffoldMessengerKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -61,8 +65,11 @@ class _CartScreenState extends State<CartScreen> {
                   refreshControler.refreshCompleted();
                 } else if (state is CartError) {
                   refreshControler.refreshFailed();
-                  
                 }
+              }
+              if (state is CartChangeError) {
+                scaffoldMessengerKey.currentState?.showSnackBar(
+                    SnackBar(content: Text(state.appException.message!)));
               }
             });
             cartBloc = bloc;
@@ -76,8 +83,20 @@ class _CartScreenState extends State<CartScreen> {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is CartError) {
-                return Center(
-                  child: Text(state.appException.message!),
+                return SmartRefresher(
+                  controller: refreshControler,
+                  onRefresh: (() {
+                    cartBloc?.add(CartStarted(
+                        AuthRepository.authChangeNotifier.value,
+                        isRefreshing: true));
+                  }),
+                  child:  AppErrorWidget(
+                  appException: state.appException,
+                  onTryAgainClick: () {
+                    BlocProvider.of<CartBloc>(context).add(CartStarted(AuthRepository.authChangeNotifier.value,
+                        isRefreshing: true));
+                  },
+                )
                 );
               } else if (state is CartSuccess) {
                 return SmartRefresher(
@@ -98,16 +117,32 @@ class _CartScreenState extends State<CartScreen> {
                   }),
                   child: ListView.builder(
                     physics: BouncingScrollPhysics(),
-                    itemCount: state.cartResponse.cartItems.length,
                     itemBuilder: (context, index) {
-                      final data = state.cartResponse.cartItems[index];
-                      return CartItem(
-                        data: data,
-                        onDeleteButttonClick: () {
-                          cartBloc?.add(CartDeleteButtonClicked(data.id));
-                        },
-                      );
+                      if (index < state.cartResponse.cartItems.length) {
+                        final data = state.cartResponse.cartItems[index];
+                        return CartItem(
+                          data: data,
+                          onDeleteButttonClick: () {
+                            cartBloc?.add(CartDeleteButtonClicked(data.id));
+                          },
+                          onIncButttonClick: () {
+                            cartBloc?.add(CartIncCountButtonClicked(data.id));
+                          },
+                          onDecButttonClick: () {
+                            if (data.count > 1) {
+                              cartBloc?.add(CartDecCountButtonClicked(data.id));
+                            }
+                          },
+                        );
+                      } else {
+                        return PriceInfo(
+                          payblePrice: state.cartResponse.payblePrice,
+                          totalPrice: state.cartResponse.totalPrice,
+                          shippingCost: state.cartResponse.shippingCost,
+                        );
+                      }
                     },
+                    itemCount: state.cartResponse.cartItems.length + 1,
                   ),
                 );
               } else if (state is CartAuthRequired) {

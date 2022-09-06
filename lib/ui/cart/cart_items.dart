@@ -2,18 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_store/common/utils.dart';
 import 'package:nike_store/data/cart_item.dart';
+import 'package:nike_store/theme.dart';
 import 'package:nike_store/ui/widget/image.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({
     Key? key,
     required this.data,
-     required this.onDeleteButttonClick,
+    required this.onDeleteButttonClick,
+    required this.onIncButttonClick,
+    required this.onDecButttonClick,
   }) : super(key: key);
 
   final CartItemEntity data;
 
   final GestureTapCallback onDeleteButttonClick;
+  final GestureTapCallback onIncButttonClick;
+  final GestureTapCallback onDecButttonClick;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +41,7 @@ class CartItem extends StatelessWidget {
                   height: 100,
                   child: ImageLoadingService(
                     imageUrl: data.product.image,
-                    radius: BorderRadius.circular(4),
+                    radius: BorderRadius.circular(12),
                   ),
                 ),
                 Expanded(
@@ -63,14 +68,19 @@ class CartItem extends StatelessWidget {
                     Row(
                       children: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: onIncButttonClick,
                             icon: Icon(CupertinoIcons.plus_square)),
-                        Text(
-                          data.count.toString(),
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
+                        data.changeCountLoading
+                            ? CupertinoActivityIndicator(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              )
+                            : Text(
+                                data.count.toString(),
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: onDecButttonClick,
                             icon: Icon(CupertinoIcons.minus_square)),
                       ],
                     ),
@@ -80,10 +90,14 @@ class CartItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      pricalbe(data.product.previousPrice),
-                      style: TextStyle(decoration: TextDecoration.lineThrough),
+                      data.product.previousPrice != null
+                          ? data.product.previousPrice!.withPriceLable
+                          : '',
+                      style: TextStyle(decoration: TextDecoration.lineThrough,
+                      fontSize: 12,
+                      color: LightThemeColors.seccondryTextColor),
                     ),
-                    Text(pricalbe(data.product.price))
+                    Text(data.product.price.withPriceLable)
                   ],
                 ),
               ],
@@ -99,7 +113,14 @@ class CartItem extends StatelessWidget {
                     child: CupertinoActivityIndicator(),
                   ),
                 )
-              : TextButton(onPressed: onDeleteButttonClick, child: Text('حذف از سبد خرید'))
+              : SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 56,
+                child: TextButton(
+                
+                    onPressed: onDeleteButttonClick,
+                    child: Text('حذف از سبد خرید')),
+              )
         ],
       ),
     );

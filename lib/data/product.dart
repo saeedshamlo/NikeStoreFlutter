@@ -12,7 +12,7 @@ class ProductEntity {
   final int discount;
   final String image;
   final int status;
-  final int? previousPrice;
+  final int previousPrice;
 
   ProductEntity(
     this.id,

@@ -24,6 +24,10 @@ class CartError extends CartState {
 
 
 }
+class CartChangeError extends CartState {
+  final AppException appException;
+  CartChangeError(this.appException);
+}
 
 class CartAuthRequired extends CartState{}
 

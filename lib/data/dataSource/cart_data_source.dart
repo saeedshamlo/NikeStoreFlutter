@@ -7,7 +7,7 @@ import 'package:nike_store/data/response/cart_response.dart';
 
 abstract class ICartDataSource {
   Future<AddToCartResponse> add(int productId);
-  Future<AddToCartResponse> changeCount(int cartItemId);
+  Future<AddToCartResponse> changeCount(int cartItemId, int count);
   Future<void> delete(int cartItemId);
   Future<int> count();
   Future<CartResponse> getAll();
@@ -30,9 +30,12 @@ class CartRemoteDataSource
   }
 
   @override
-  Future<AddToCartResponse> changeCount(int cartItemId) {
-    // TODO: implement changeCount
-    throw UnimplementedError();
+  Future<AddToCartResponse> changeCount(int cartItemId, int count) async {
+    final response = await httpClient.post('cart/changeCount',
+        data: {"cart_item_id": cartItemId, "count": count});
+
+    validateResponse(response);
+    return AddToCartResponse.fromJson(response.data);
   }
 
   @override
@@ -43,10 +46,7 @@ class CartRemoteDataSource
 
   @override
   Future<void> delete(int cartItemId) async {
-    await httpClient.post('cart/remove',data: {
-      'cart_item_id':cartItemId
-    });
-
+    await httpClient.post('cart/remove', data: {'cart_item_id': cartItemId});
   }
 
   @override
