@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nike_store/data/repo/auth_repository.dart';
+import 'package:nike_store/data/repo/cart_repository.dart';
 import 'package:nike_store/ui/cart/cart.dart';
 import 'package:nike_store/ui/home/home.dart';
+import 'package:nike_store/ui/widget/badge.dart';
 
 const int homeIndex = 0;
 const int seearchIndex = 1;
@@ -73,10 +75,11 @@ class _RootScreenState extends State<RootScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                       Text('Profile'),
+                      Text('Profile'),
                       ElevatedButton(
                           onPressed: () {
                             authRepository.signOut();
+                            CartRepository.cartItemCountNotifier.value = 0;
                           },
                           child: Text('Sign Out'))
                     ],
@@ -95,9 +98,35 @@ class _RootScreenState extends State<RootScreen> {
                   activeIcon:
                       SvgPicture.asset('assets/icon/search_active.svg')),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset('assets/icon/cart.svg'),
+                  icon: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      SvgPicture.asset('assets/icon/cart.svg'),
+                      Positioned(
+                        child: ValueListenableBuilder<int>(
+                          valueListenable: CartRepository.cartItemCountNotifier,
+                          builder: (context, value, child) =>
+                              Badge(value: value),
+                        ),
+                        right: -10,
+                      )
+                    ],
+                  ),
                   label: 'سبد خرید',
-                  activeIcon: SvgPicture.asset('assets/icon/cart_active.svg')),
+                  activeIcon: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      SvgPicture.asset('assets/icon/cart_active.svg'),
+                      Positioned(
+                        child: ValueListenableBuilder<int>(
+                          valueListenable: CartRepository.cartItemCountNotifier,
+                          builder: (context, value, child) =>
+                              Badge(value: value),
+                        ),
+                        right: -10,
+                      )
+                    ],
+                  )),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon/profile.svg'),
                   label: 'پروفایل',
@@ -108,6 +137,7 @@ class _RootScreenState extends State<RootScreen> {
             showUnselectedLabels: false,
             showSelectedLabels: false,
             backgroundColor: Colors.white,
+          
             elevation: 24,
             selectedItemColor: Theme.of(context).primaryColor,
             unselectedItemColor: Colors.black.withOpacity(0.3),
@@ -134,5 +164,11 @@ class _RootScreenState extends State<RootScreen> {
                   Offstage(offstage: selectedTabIndex != index, child: child),
             ),
           );
+  }
+
+  @override
+  void initState() {
+    cartRepository.count();
+    super.initState();
   }
 }

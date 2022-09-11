@@ -40,24 +40,55 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white,
-        foregroundColor: LightThemeColors.primatyTextColor,
-        elevation: 0
-       ),
-        inputDecorationTheme: InputDecorationTheme(
-                labelStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: LightThemeColors.primatyColor,
-                    ),
-                    borderRadius: BorderRadius.circular(12))),
+          useMaterial3: true,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.white),
+              backgroundColor: MaterialStateProperty.all(LightThemeColors.primatyColor),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8)
+              ))
+            )
+          ),
+          outlinedButtonTheme: 
+          OutlinedButtonThemeData(
+            style: ButtonStyle(
+                    shape: MaterialStateProperty.all( RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)
+                    )),
+                    side: MaterialStateProperty.all(BorderSide(
+                        color: Colors.blue.withOpacity(0.1),
+                        width: 1.0,
+                        style: BorderStyle.solid))
+                  )
+          ),
+          highlightColor: LightThemeColors.seccondryTextColor,
+          appBarTheme: AppBarTheme(
+            centerTitle: false,
+              backgroundColor: Colors.white,
+              foregroundColor: LightThemeColors.primatyTextColor,
+              elevation: 0),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: LightThemeColors.seccondryColor),
+            
+          inputDecorationTheme: InputDecorationTheme(
+              labelStyle: TextStyle(color: Colors.black.withOpacity(0.5),fontFamily:"YekanBakh" ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: LightThemeColors.primatyTextColor.withOpacity(0.1)
+                )
+              ),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: LightThemeColors.primatyColor,
+                  ),
+                  )),
           snackBarTheme: SnackBarThemeData(
-            backgroundColor:LightThemeColors.primatyColor,
+              backgroundColor: LightThemeColors.primatyColor,
               contentTextStyle: defultTextStyle.apply(
                 color: Colors.white,
-                )),
+              )),
           textTheme: TextTheme(
               subtitle1: defultTextStyle.copyWith(
                   fontSize: 16, color: LightThemeColors.seccondryTextColor),

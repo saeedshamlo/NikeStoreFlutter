@@ -13,6 +13,7 @@ import 'package:nike_store/ui/auth/auth.dart';
 import 'package:nike_store/ui/cart/bloc/cart_bloc.dart';
 import 'package:nike_store/ui/cart/cart_items.dart';
 import 'package:nike_store/ui/cart/price_info.dart';
+import 'package:nike_store/ui/shipping/shipping.dart';
 import 'package:nike_store/ui/widget/empty_state.dart';
 import 'package:nike_store/ui/widget/error.dart';
 import 'package:nike_store/ui/widget/image.dart';
@@ -27,6 +28,7 @@ class _CartScreenState extends State<CartScreen> {
   late final CartBloc? cartBloc;
   final RefreshController refreshControler = RefreshController();
   StreamSubscription? streamSubscription;
+  bool stateIsSuccess = false;
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey();
   @override
   void initState() {
@@ -56,10 +58,35 @@ class _CartScreenState extends State<CartScreen> {
           centerTitle: true,
           title: Text('سبد خرید'),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Visibility(
+          visible: stateIsSuccess,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(left: 32, right: 32),
+            child: FloatingActionButton.extended(
+                onPressed: () {
+                  final state = cartBloc!.state;
+                  if (state is CartSuccess) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ShippingScreen(
+                        payblePrice: state.cartResponse.payblePrice,
+                        totalPrice: state.cartResponse.totalPrice,
+                        shippingCost: state.cartResponse.shippingCost,
+                      ),
+                    ));
+                  }
+                },
+                label: Text('پرداخت')),
+          ),
+        ),
         body: BlocProvider<CartBloc>(
           create: (context) {
             final bloc = CartBloc(cartRepository);
             streamSubscription = bloc.stream.listen((state) {
+              setState(() {
+                stateIsSuccess = state is CartSuccess;
+              });
               if (refreshControler.isRefresh) {
                 if (state is CartSuccess) {
                   refreshControler.refreshCompleted();
@@ -84,20 +111,20 @@ class _CartScreenState extends State<CartScreen> {
                 );
               } else if (state is CartError) {
                 return SmartRefresher(
-                  controller: refreshControler,
-                  onRefresh: (() {
-                    cartBloc?.add(CartStarted(
-                        AuthRepository.authChangeNotifier.value,
-                        isRefreshing: true));
-                  }),
-                  child:  AppErrorWidget(
-                  appException: state.appException,
-                  onTryAgainClick: () {
-                    BlocProvider.of<CartBloc>(context).add(CartStarted(AuthRepository.authChangeNotifier.value,
-                        isRefreshing: true));
-                  },
-                )
-                );
+                    controller: refreshControler,
+                    onRefresh: (() {
+                      cartBloc?.add(CartStarted(
+                          AuthRepository.authChangeNotifier.value,
+                          isRefreshing: true));
+                    }),
+                    child: AppErrorWidget(
+                      appException: state.appException,
+                      onTryAgainClick: () {
+                        BlocProvider.of<CartBloc>(context).add(CartStarted(
+                            AuthRepository.authChangeNotifier.value,
+                            isRefreshing: true));
+                      },
+                    ));
               } else if (state is CartSuccess) {
                 return SmartRefresher(
                   controller: refreshControler,
@@ -116,6 +143,7 @@ class _CartScreenState extends State<CartScreen> {
                         isRefreshing: true));
                   }),
                   child: ListView.builder(
+                    padding: EdgeInsets.only(bottom: 60),
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       if (index < state.cartResponse.cartItems.length) {

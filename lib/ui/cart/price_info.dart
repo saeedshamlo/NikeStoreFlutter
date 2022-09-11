@@ -31,7 +31,7 @@ class PriceInfo extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(8, 8, 8, 32),
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(0.09))
               ]),

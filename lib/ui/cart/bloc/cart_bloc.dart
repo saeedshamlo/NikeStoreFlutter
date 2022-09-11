@@ -49,6 +49,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 ? ++successState.cartResponse.cartItems[index].count 
                 : --successState.cartResponse.cartItems[index].count;
             await cartRepository.changeCount(cartItemId, newCount);
+            await cartRepository.count();
 
             successState.cartResponse.cartItems
                 .firstWhere((element) => element.id == cartItemId)
@@ -78,6 +79,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             final successState = (state as CartSuccess);
             successState.cartResponse.cartItems
                 .removeWhere((element) => element.id == event.cartItemId);
+                await cartRepository.count();
             if (successState.cartResponse.cartItems.isEmpty) {
               emit(CartEmpty());
             } else {
