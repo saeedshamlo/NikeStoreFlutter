@@ -12,6 +12,7 @@ import 'package:nike_store/data/repo/product_repository.dart';
 import 'package:nike_store/main.dart';
 import 'package:nike_store/ui/home/bloc/home_bloc.dart';
 import 'package:nike_store/ui/product/product.dart';
+import 'package:nike_store/ui/search/search_screen.dart';
 import 'package:nike_store/ui/widget/error.dart';
 import 'package:nike_store/ui/widget/image.dart';
 import 'package:nike_store/ui/widget/slider.dart';
@@ -156,6 +157,7 @@ class Search extends StatelessWidget {
         child: Stack(
           children: [
             TextField(
+              onTap:() =>  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SerachScreen(),)),
               style: defultTextStyle.copyWith(fontWeight: FontWeight.bold),
               textAlignVertical: TextAlignVertical.bottom,
               decoration: InputDecoration(
