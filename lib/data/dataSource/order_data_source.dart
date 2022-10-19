@@ -12,8 +12,8 @@ class OrderRemoteDataSource implements IOrderDataSource {
   @override
   Future<CreateOrderReuslt> create(CreateOrderParams params) async{
     final response = await httpClient.post('order/submit', data: {
-      'firstName': params.firtsName,
-      'lastName': params.lastName,
+      'first_name': params.firtsName,
+      'last_name': params.lastName,
       'mobile': params.phoneNumber,
       'postal_code': params.postalCode,
       'address': params.address,

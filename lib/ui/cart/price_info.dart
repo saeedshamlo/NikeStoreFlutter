@@ -51,7 +51,7 @@ class PriceInfo extends StatelessWidget {
 
   Padding priceItem(String lable, int value, BuildContext context,double fontSize) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

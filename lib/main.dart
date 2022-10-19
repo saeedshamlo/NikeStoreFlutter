@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
               ))
             )
           ),
+        
           outlinedButtonTheme: 
           OutlinedButtonThemeData(
             style: ButtonStyle(
