@@ -1,5 +1,5 @@
 class AppException{
-  final String? message;
+  final String message;
 
   AppException({this.message='خطا نامشخص'});
 }

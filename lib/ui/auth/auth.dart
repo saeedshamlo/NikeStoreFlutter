@@ -102,8 +102,10 @@ class _AuthScreenState extends State<AuthScreen> {
                         height: 24,
                       ),
                       TextField(
+                      style: TextStyle(color: Colors.white),
                         controller: usernameController,
                         keyboardType: TextInputType.emailAddress,
+                        
                         decoration: InputDecoration(label: Text('آدرس ایمیل')),
                       ),
                       SizedBox(
@@ -196,6 +198,7 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+                   style: TextStyle(color: Colors.white),
         controller: widget.passwordController,
         obscureText: onsecureText,
         obscuringCharacter: '*',

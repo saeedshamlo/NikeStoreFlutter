@@ -74,6 +74,7 @@ class MyApp extends StatelessWidget {
             
           inputDecorationTheme: InputDecorationTheme(
               labelStyle: TextStyle(color: Colors.black.withOpacity(0.5),fontFamily:"YekanBakh" ),
+          
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: LightThemeColors.primatyTextColor.withOpacity(0.1)

@@ -5,7 +5,6 @@ import 'package:nike_store/data/repo/auth_repository.dart';
 import 'package:nike_store/data/repo/cart_repository.dart';
 import 'package:nike_store/ui/cart/cart.dart';
 import 'package:nike_store/ui/home/home.dart';
-import 'package:nike_store/ui/widget/badge.dart';
 
 const int homeIndex = 0;
 const int seearchIndex = 1;
@@ -106,7 +105,7 @@ class _RootScreenState extends State<RootScreen> {
                         child: ValueListenableBuilder<int>(
                           valueListenable: CartRepository.cartItemCountNotifier,
                           builder: (context, value, child) =>
-                              Badge(value: value),
+                              Badge(child:Text(value.toString())),
                         ),
                         right: -10,
                       )
@@ -121,12 +120,13 @@ class _RootScreenState extends State<RootScreen> {
                         child: ValueListenableBuilder<int>(
                           valueListenable: CartRepository.cartItemCountNotifier,
                           builder: (context, value, child) =>
-                              Badge(value: value),
+                              Badge(child:Text(value.toString())),
                         ),
                         right: -10,
                       )
                     ],
                   )),
+          
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon/profile.svg'),
                   label: 'پروفایل',

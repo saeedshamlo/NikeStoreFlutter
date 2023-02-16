@@ -27,9 +27,11 @@ class ProductEntity {
   ProductEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],
-        price = json['price'],
+        price = json['previous_price'] == null ?
+        json['price'] - json['discount']
+        : json['price'],
         discount = json['discount'],
         image = json['image'],
         status = json['status'],
-        previousPrice = json['previous_price'] ?? json['price'] + json['discount'];
+        previousPrice = json['previous_price'] ?? json['price'];
 }

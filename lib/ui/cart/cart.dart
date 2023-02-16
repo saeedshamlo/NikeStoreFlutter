@@ -102,7 +102,7 @@ class _CartScreenState extends State<CartScreen> {
             cartBloc = bloc;
             bloc.add(CartStarted(AuthRepository.authChangeNotifier.value));
             return bloc;
-          },
+          }, 
           child: BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
               if (state is CartLoading) {
@@ -174,21 +174,23 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 );
               } else if (state is CartAuthRequired) {
-                return EmptyView(
-                    message:
-                        'برای مشاهده سبد خرید ابتدا وارد حساب کاربری خود شوید',
-                    callToAction: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true)
-                              .push(MaterialPageRoute(
-                            builder: (context) => AuthScreen(),
-                          ));
-                        },
-                        child: Text('ورود به حساب کاربری')),
-                    image: SvgPicture.asset(
-                      'assets/img/auth_required.svg',
-                      width: 200,
-                    ));
+                return Center(
+                  child: EmptyView(
+                      message:
+                          'برای مشاهده سبد خرید ابتدا وارد حساب کاربری خود شوید',
+                      callToAction: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true)
+                                .push(MaterialPageRoute(
+                              builder: (context) => AuthScreen(),
+                            ));
+                          },
+                          child: Text('ورود به حساب کاربری')),
+                      image: SvgPicture.asset(
+                        'assets/img/auth_required.svg',
+                        width: 200,
+                      )),
+                );
               } else if (state is CartEmpty) {
                 return EmptyView(
                     message:

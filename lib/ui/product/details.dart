@@ -132,7 +132,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           height: 24,
                         ),
                         const Text(
-                            'این محصول بسیار زیبا و راحت است و من در استفاده از آن بیسار راضی هستم . باشد که از محصول ایرانی بیشتر حمایت شود'),
+                            'این محصول بسیار زیبا و راحت است و من در استفاده از آن بسیار راضی هستم . باشد که از محصول ایرانی بیشتر حمایت شود'),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:nike_store/data/order.dart';
+import 'package:nike_store/data/payment_receipt.dart';
 
 abstract class IOrderDataSource {
   Future<CreateOrderReuslt> create(CreateOrderParams params);
+  Future<PaymentReceiptData> getPaymentReceipt(int orderId);
 }
 
 class OrderRemoteDataSource implements IOrderDataSource {
@@ -23,5 +25,11 @@ class OrderRemoteDataSource implements IOrderDataSource {
     });
 
     return CreateOrderReuslt.fromJson(response.data);
+  }
+  
+  @override
+  Future<PaymentReceiptData> getPaymentReceipt(int orderId) async{
+    final response = await httpClient.get('order/checkout?order_id=$orderId');
+    return PaymentReceiptData.fromJson(response.data);
   }
 }
