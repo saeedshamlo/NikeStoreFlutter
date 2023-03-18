@@ -5,6 +5,8 @@ import 'package:nike_store/data/repo/auth_repository.dart';
 import 'package:nike_store/data/repo/cart_repository.dart';
 import 'package:nike_store/ui/cart/cart.dart';
 import 'package:nike_store/ui/home/home.dart';
+import 'package:nike_store/ui/profile/profile.dart';
+import 'package:nike_store/ui/search/search_screen.dart';
 
 const int homeIndex = 0;
 const int seearchIndex = 1;
@@ -60,31 +62,10 @@ class _RootScreenState extends State<RootScreen> {
             index: selectedTabIndex,
             children: [
               navigator(_homeKey, homeIndex, const HomeScreen()),
-              navigator(
-                  _searchKey,
-                  seearchIndex,
-                  Center(
-                    child: Text('Search'),
-                  )),
+              navigator( _searchKey,seearchIndex,SerachScreen()),
               navigator(_cartleKey, cartIndex, CartScreen()),
-              navigator(
-                  _profileKey,
-                  profileIndex,
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text('Profile'),
-                      ElevatedButton(
-                          onPressed: () {
-                            authRepository.signOut();
-                            CartRepository.cartItemCountNotifier.value = 0;
-                          },
-                          child: Text('Sign Out'))
-                    ],
-                  )),
-            ],
-          ),
+              navigator(_profileKey, profileIndex,ProfileScreen())
+            ]),
           bottomNavigationBar: BottomNavigationBar(
             items: [
               BottomNavigationBarItem(
@@ -104,8 +85,10 @@ class _RootScreenState extends State<RootScreen> {
                       Positioned(
                         child: ValueListenableBuilder<int>(
                           valueListenable: CartRepository.cartItemCountNotifier,
-                          builder: (context, value, child) =>
-                              Badge(child:Text(value.toString())),
+                          builder: (context, value, child) => Badge(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              label: Text(value.toString())),
                         ),
                         right: -10,
                       )
@@ -119,14 +102,15 @@ class _RootScreenState extends State<RootScreen> {
                       Positioned(
                         child: ValueListenableBuilder<int>(
                           valueListenable: CartRepository.cartItemCountNotifier,
-                          builder: (context, value, child) =>
-                              Badge(child:Text(value.toString())),
+                          builder: (context, value, child) => Badge(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              label: Text(value.toString())),
                         ),
                         right: -10,
                       )
                     ],
                   )),
-          
               BottomNavigationBarItem(
                   icon: SvgPicture.asset('assets/icon/profile.svg'),
                   label: 'پروفایل',
@@ -137,7 +121,6 @@ class _RootScreenState extends State<RootScreen> {
             showUnselectedLabels: false,
             showSelectedLabels: false,
             backgroundColor: Colors.white,
-          
             elevation: 24,
             selectedItemColor: Theme.of(context).primaryColor,
             unselectedItemColor: Colors.black.withOpacity(0.3),

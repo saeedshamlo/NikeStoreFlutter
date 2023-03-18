@@ -18,6 +18,7 @@ import 'package:nike_store/ui/widget/empty_state.dart';
 import 'package:nike_store/ui/widget/error.dart';
 import 'package:nike_store/ui/widget/image.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:rive/rive.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -107,7 +108,11 @@ class _CartScreenState extends State<CartScreen> {
             builder: (context, state) {
               if (state is CartLoading) {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: Center(
+                    child: SizedBox(
+                        width: 64,
+                        height: 64,
+                        child: RiveAnimation.asset('assets/riv/loading.riv'))),
                 );
               } else if (state is CartError) {
                 return SmartRefresher(

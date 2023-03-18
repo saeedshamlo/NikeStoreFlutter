@@ -4,7 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:nike_store/common/http_client.dart';
 import 'package:nike_store/data/dataSource/product_data_source.dart';
 import 'package:nike_store/data/product.dart';
+import 'package:nike_store/data/product_search.dart';
 import 'package:nike_store/data/response/add_comment_response.dart';
+import 'package:nike_store/ui/profile/profile.dart';
 
 final productRepository =
     ProductRepository(ProductRemoteDataSource(httpClient));

@@ -105,6 +105,7 @@ class CartItem extends StatelessWidget {
           ),
           Divider(
             height: 1,
+            color: Theme.of(context).dividerColor,
           ),
           data.deleteButtonLoading
               ? SizedBox(

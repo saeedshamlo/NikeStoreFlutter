@@ -38,9 +38,13 @@ class PriceInfo extends StatelessWidget {
           child: Column(
             children: [
               priceItem('مبلغ کل خرید', totalPrice, context,14),
-              Divider(),
+              Divider(
+                color: Theme.of(context).dividerColor,
+              ),
               priceItem('هزینه ارسال', shippingCost, context,14),
-              Divider(),
+              Divider(
+                color: Theme.of(context).dividerColor,
+              ),
               priceItem('مبلغ قابل پرداخت', payblePrice, context,18),
             ],
           ),

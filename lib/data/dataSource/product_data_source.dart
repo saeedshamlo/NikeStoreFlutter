@@ -3,6 +3,7 @@ import 'package:nike_store/common/exception.dart';
 import 'package:nike_store/common/http_client.dart';
 import 'package:nike_store/data/common/response_validator.dart';
 import 'package:nike_store/data/product.dart';
+import 'package:nike_store/data/product_search.dart';
 import 'package:nike_store/data/response/add_comment_response.dart';
 
 abstract class IProductDataSource {
@@ -10,6 +11,7 @@ abstract class IProductDataSource {
   Future<List<ProductEntity>> searchProduct(String search);
   Future<AddCommentReposne> addCommnet(
       {required int productId, required String content, required String title});
+
 }
 
 class ProductRemoteDataSource

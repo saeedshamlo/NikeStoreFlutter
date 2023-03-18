@@ -9,6 +9,7 @@ import 'package:nike_store/theme.dart';
 import 'package:nike_store/ui/auth/auth.dart';
 import 'package:nike_store/ui/home/home.dart';
 import 'package:nike_store/ui/root.dart';
+import 'package:nike_store/ui/spalsh/splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +40,16 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        dividerColor:Colors.black.withOpacity(0.1) ,
+        dialogTheme: DialogTheme(
+          elevation: 0,
+    
+          backgroundColor: Colors.white,
+          titleTextStyle: Theme.of(context).textTheme.headline6,
+      
+        ),
           useMaterial3: true,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
@@ -104,8 +114,8 @@ class MyApp extends StatelessWidget {
               primary: LightThemeColors.primatyColor,
               secondary: LightThemeColors.seccondryColor,
               onSecondary: Colors.white)),
-      home:
-          Directionality(textDirection: TextDirection.rtl, child: RootScreen()),
+      home: SplashScreen()
+          //Directionality(textDirection: TextDirection.rtl, child: RootScreen()),
     );
   }
 }

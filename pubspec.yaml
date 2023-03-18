@@ -48,6 +48,8 @@ dependencies:
   pull_to_refresh: ^2.0.0
   intl: ^0.17.0
   webview_flutter: ^4.0.1
+  rive: ^0.10.3
+  shimmer: ^2.0.0
 
 
 
@@ -77,6 +79,7 @@ flutter:
     - assets/img/
     - assets/icon/
     - assets/anim/
+    - assets/riv/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

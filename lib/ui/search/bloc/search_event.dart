@@ -6,3 +6,9 @@ abstract class SearchEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SearchListStarted extends SearchEvent {
+  final String search;
+
+  SearchListStarted(this.search);
+}

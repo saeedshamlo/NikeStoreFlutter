@@ -11,14 +11,30 @@ import 'package:nike_store/data/repo/banner_repository.dart';
 import 'package:nike_store/data/repo/product_repository.dart';
 import 'package:nike_store/main.dart';
 import 'package:nike_store/ui/home/bloc/home_bloc.dart';
+import 'package:nike_store/ui/list/list.dart';
 import 'package:nike_store/ui/product/product.dart';
 import 'package:nike_store/ui/search/search_screen.dart';
 import 'package:nike_store/ui/widget/error.dart';
 import 'package:nike_store/ui/widget/image.dart';
 import 'package:nike_store/ui/widget/slider.dart';
+import 'package:rive/rive.dart';
+import 'package:shimmer/shimmer.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late RiveAnimationController likeAnimationController;
+
+  @override
+  void initState() {
+    likeAnimationController = OneShotAnimation("like", autoplay: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +67,29 @@ class HomeScreen extends StatelessWidget {
                           ),
                         );
                       case 1:
-                        return const Search();
+                       return SizedBox(height: 16,);
                       case 2:
                         return BannerSlider(banners: state.banners);
                       case 3:
                         return HorizontalProductList(
                           title: 'جدیدترین',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductListScreen(sort: ProductSort.latest),
+                            ));
+                          },
                           products: state.latestProducts,
                         );
                       case 4:
                         return HorizontalProductList(
                           title: 'محبوب ترین',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductListScreen(sort: ProductSort.popular),
+                            ));
+                          },
                           products: state.popularProducts,
                         );
                       default:
@@ -74,7 +100,20 @@ class HomeScreen extends StatelessWidget {
                   },
                 );
               } else if (state is HomeLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(
+                    child: SizedBox(
+                        width: 64,
+                        height: 64,
+                        child: RiveAnimation.asset('assets/riv/loading.riv')));
+                // return Shimmer.fromColors(
+                //   child: Container(
+                //     width: 100,
+                //     height: 100,
+                //     color: Colors.red,
+                //   ),
+                //   baseColor: Colors.grey.shade300,
+                //   highlightColor: Colors.grey.shade100,
+                // );
               } else if (state is HomeError) {
                 return AppErrorWidget(
                   appException: state.exception,
@@ -93,8 +132,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
-
 class HorizontalProductList extends StatelessWidget {
   final String title;
   final GestureTapCallback onTap;
@@ -108,7 +145,7 @@ class HorizontalProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 12, right: 12),
@@ -157,7 +194,9 @@ class Search extends StatelessWidget {
         child: Stack(
           children: [
             TextField(
-              onTap:() =>  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SerachScreen(),)),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SerachScreen(),
+              )),
               style: defultTextStyle.copyWith(fontWeight: FontWeight.bold),
               textAlignVertical: TextAlignVertical.bottom,
               decoration: InputDecoration(

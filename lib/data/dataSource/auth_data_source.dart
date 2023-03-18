@@ -26,7 +26,7 @@ class AuthRemoteDataSource
     });
     validateResponse(response);
     return AuthInfo(
-        response.data["access_token"], response.data["refresh_token"]);
+        response.data["access_token"], response.data["refresh_token"],username);
   }
 
   @override
@@ -41,7 +41,7 @@ final response = await httpClient.post("auth/token", data: {
     validateResponse(response);
     
     return AuthInfo(
-        response.data["access_token"], response.data["refresh_token"]);
+        response.data["access_token"], response.data["refresh_token"],'');
   }
 
   @override
